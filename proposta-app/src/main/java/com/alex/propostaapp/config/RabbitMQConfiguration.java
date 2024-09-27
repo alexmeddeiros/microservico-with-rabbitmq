@@ -16,8 +16,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfiguration {
 
-    @Value("${rabbitmq.propostapendente.exchange}")
-    private String exchange;
+    @Value("${rabbitmq-propostapendente-exchange}")
+    private String exchangePropostaPendente;
+    @Value("${rabbitmq-propostaconcluida-exchange}")
+    private String exchangePropostaConcluida;
 
     @Bean
     public Queue criarFilaPropostaPendenteMsAnaliseCredito() {
@@ -30,12 +32,12 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public Queue criarFilaPropostaConcluidaMsProposta() {
+    public Queue criarFilaPropostaConcluidaMSProposta() {
         return QueueBuilder.durable("proposta-concluida.ms-proposta").build();
     }
 
     @Bean
-    public Queue criarFilaPropostaConcluidaMsNotificacao() {
+    public Queue criarFilaPropostaConcluidaMSNotificacao() {
         return QueueBuilder.durable("proposta-concluida.ms-notificacao").build();
     }
 
@@ -54,12 +56,17 @@ public class RabbitMQConfiguration {
 
 
     // Criacao da exchange
-
     @Bean
     public FanoutExchange criarFanoutExchangePropostaPendente() {
-        return ExchangeBuilder.fanoutExchange(exchange).build();
+        return ExchangeBuilder.fanoutExchange(exchangePropostaPendente).build();
+    }
+    @Bean
+    public FanoutExchange criarFanoutExchangePropostaConcluida() {
+        return ExchangeBuilder.fanoutExchange(exchangePropostaConcluida).build();
     }
 
+
+    // Binds
     @Bean
     public Binding criarBindingPropostaPendenteMsAnaliseCredito() {
         return BindingBuilder.bind(criarFilaPropostaPendenteMsAnaliseCredito())
@@ -71,6 +78,18 @@ public class RabbitMQConfiguration {
         return BindingBuilder.bind(criarFilaPropostaPendenteMsNotificacao())
                 .to(criarFanoutExchangePropostaPendente());
     }
+
+    @Bean
+    public Binding criarBindingPropostaConcluidaMSPropostaApp() {
+        return BindingBuilder.bind(criarFilaPropostaConcluidaMSProposta())
+                .to(criarFanoutExchangePropostaConcluida());
+    }
+    @Bean
+    public Binding criarBindingPropostaConcluidaMSNotificacao() {
+        return BindingBuilder.bind(criarFilaPropostaConcluidaMSNotificacao())
+                .to(criarFanoutExchangePropostaConcluida());
+    }
+
 
 
     // CONFIGURANDO O PROPRIO RABBITTAMPLATE;

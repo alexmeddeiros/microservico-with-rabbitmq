@@ -8,7 +8,7 @@
 		<version>3.2.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.alexmedeiros</groupId>
+	<groupId>com.alex</groupId>
 	<artifactId>notifacao</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>notifacao</name>

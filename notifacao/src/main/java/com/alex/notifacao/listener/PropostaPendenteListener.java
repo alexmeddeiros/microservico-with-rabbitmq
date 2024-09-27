@@ -13,7 +13,7 @@ public class PropostaPendenteListener {
     @Autowired
     private NotificacaoSnsService notificacaoSnsService;
 
-    @RabbitListener(queues = "${rabbitmq.queue.proposta.pendente}")
+    @RabbitListener(queues = "${rabbitmq-queue-proposta-pendente}")
     public void propostaPendente(Proposta proposta){
         String mensagem = String.format(MensagemConstante.PROPOSTA_EM_ANALISE, proposta.getUsuario().getNome());
 

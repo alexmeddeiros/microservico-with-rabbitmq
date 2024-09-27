@@ -21,7 +21,7 @@ public class PropostaSemIntegracao {
     private final Logger logger = LoggerFactory.getLogger(PropostaSemIntegracao.class);
 
     public PropostaSemIntegracao(PropostaRepository repository,
-                                 @Value("${rabbitmq.propostapendente.exchange}") String exchange,
+                                 @Value("${rabbitmq- propostapendente-exchange}") String exchange,
                                  NotificacaoRabbitMQService notificacaoRabbitMQService) {
         this.repository = repository;
         this.exchange = exchange;
